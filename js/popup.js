@@ -1,3 +1,6 @@
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const startButton = document.getElementById('startButton');
 
@@ -15,56 +18,129 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+
+
+
+
+
+
+
 function startContentScript() {
-  // Este código se ejecutará en el contexto de la pestaña activa
-  // Realiza el scraping aquí y devuelve los resultados
-
-  // Selecciona el elemento <input> por su id
-  const inputElement = document.querySelector('#sharingToken');
-
-  if (inputElement) {
-    // Obtiene el valor del atributo value
-    const inputValue = inputElement.value;
-
-    // Hacer algo con inputValue, por ejemplo, imprimir en consola
-    console.log(inputValue);
-
-
-    //localizamos el número de archivos a descargar
-    // Select the .fileinfo element
-    let fileInfo = document.querySelector('td.filesummary .fileinfo');
-
-    // Get the text content of the .fileinfo element
-    let fileInfoText = fileInfo.textContent; // e.g., "4 archivos"
-
-    // Use a regular expression to find the first number in the text
-    let matches = fileInfoText.match(/\d+/);
-
-    // Parse the number from the result and make sure it's an integer
-    let numberOfFiles = matches ? parseInt(matches[0], 10) : null;
-
-    alert(numberOfFiles); // This will log the number, e.g., 4
-
-
-    // Select only the first <tr> element with 'data-file' attribute
-    const trElement = document.querySelector('tr[data-file]');
 
 
 
-    // Show an alert with the value of 'data-file' attribute of the first <tr> element
-    if (trElement) { // Check if the element exists
-      let baseFilename = trElement.getAttribute('data-file');
-      let path = trElement.getAttribute('data-path');
-      alert('Descargamos ' + trElement.getAttribute('data-file') + ' con path ' + trElement.getAttribute('data-path'));
-      chrome.runtime.sendMessage({ action: 'scrapedData', inputValue, path, baseFilename, numberOfFiles });
+  function consultarValor(clave) {
+    let instrumentosAGN = {
+      'Audiovisuales': 'au',
+      'Cartográficos': 'ca',
+      'Iconográficos': 'ic',
+      'Textuales': 'te',
+      'Ficheros': 'fi'
+    };
 
+    if (clave in instrumentosAGN) {
+      return instrumentosAGN[clave];
     } else {
-      alert('No se encontró ningún elemento <tr> con atributo data-file');
+      alert(" No encuentro la clave del árbol de contenidos");
+      return null;
     }
-
-  } else {
-    console.log('Elemento no encontrado');
   }
 
 
+  function createURL(idInstrumento, identificador) {
+
+    // Separa la parte por guiones bajos '_'
+    const subParts = identificador.split('_');
+
+    // Construye la URL basada en la longitud de subParts
+    let url;
+    if (subParts.length === 3) {
+      url = `https://repositorio.agn.gob.mx/api/img?folioAnio=${subParts[0]}&idFicha=${subParts[1]}&folioInstrumento=${subParts[2]}&typeInst=`
+        + idInstrumento;
+
+    } else if (subParts.length === 1) {
+
+      //ES UNA UNIDAD INSTRUMENTAL
+      url = `https://repositorio.agn.gob.mx/api/img/unidadInstalacion/` +
+        idInstrumento + `/${subParts[0]}`;
+    } else {
+      alert('La longitud de subParts no es ni 1 ni 3');
+    }
+    return url;
+
+  }
+
+
+
+  let existeBoton = !!document.querySelector('.menuBtnSeleccion'); // Verifica si existe algún botón con la clase 'menuBtnSeleccion'
+
+  if (existeBoton) {
+
+    //Buscamos el Tipo de instrumento que se ha seleccionado en el árbol
+    //Al menos hay que seleccionar uno, no se puede usar la raíz
+    const tipoInstrumento = document.querySelectorAll('.ruta a');
+    if (tipoInstrumento.length > 1) {
+      console.log(tipoInstrumento[1].textContent);
+      const idInstrumento = consultarValor(tipoInstrumento[1].textContent);
+      console.log(idInstrumento);
+
+      //Si existe en nuestra lista de fondos seguimos buscando. Puede ser que añadan tipos de Fondo en un futuro
+
+
+      // Selecciona todos los elementos que tienen aria-selected="true"
+      const selectedElements = document.querySelectorAll('[aria-selected="true"]');
+
+      // Verifica si hay elementos seleccionados
+      if (selectedElements.length > 0) {
+        // Recorre cada elemento seleccionado
+        selectedElements.forEach(element => {
+          // Obtiene el valor del atributo 'id'
+          const idValue = element.getAttribute('id');
+          if (idValue) { // Verifica si el valor de 'id' existe
+            // Separa el valor de 'id' por guiones '-'
+            const parts = idValue.split('-');
+
+
+            const instrumento = parts.slice(1, 3)[1]; // Al final aparecen las  siglas del instrumento
+            console.log(instrumento);
+
+            if ((instrumento == "FO") || (instrumento == "AR") || (instrumento == "IN")) {
+              alert('No se puede descargar. Seleccione un subnivel del árbol de navegación');
+            }
+            else {
+
+              const relevantPart = parts.slice(1, 3)[0]; // Asume que necesitamos la  primera parte relevante
+
+              let url;
+
+              url = createURL(idInstrumento, relevantPart);
+
+              if (url) {
+                console.log(url); // O cualquier otra operación que necesites realizar  con la URL
+                chrome.runtime.sendMessage({ action: 'scrapedData', url });
+
+              }
+            }
+          }
+          else {
+            alert('No se puede descargar. Seleccione un subnivel del árbol de navegación');
+          }
+        });
+      }
+      else {
+        alert('Seleccione un subnivel del árbol de navegación');
+      }
+
+
+    } else {
+      alert('Es necesario seleccionar un tipo de instrumento');
+    }
+
+
+
+  }
+
+  else {
+    alert('No existe galería de imágenes');
+  }
 }

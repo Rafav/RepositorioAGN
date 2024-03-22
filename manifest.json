@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AGN",
+  "name": "Repositorio AGN",
   "version": "1.0.0",
-  "description": "Descarga masiva del Archivo General de la Nación",
+  "description": "Descarga masiva del Repositorio del AGN",
   "permissions": [
     "activeTab",
     "scripting",
@@ -11,7 +11,7 @@
   "action": {
     "default_popup": "popup.html",
     "matches": [
-      "*://cloud.agn.gob.mx/nextcloud/*"
+      "*://repositorio.agn.gob.mx/*"
     ],
     "default_icon": {
       "16": "img/icon16.png",
