@@ -29,8 +29,6 @@ async function descargarYProcesarJSON(url) {
     }
 }
 
-// Uso de la función con una URL de ejemplo
-descargarYProcesarJSON('https://ejemplo.com/miarchivo.json');
 
 
 function iterateFilename(url_json) {

@@ -41,7 +41,7 @@ function startContentScript() {
     if (clave in instrumentosAGN) {
       return instrumentosAGN[clave];
     } else {
-      alert(" No encuentro la clave del árbol de contenidos");
+      alert(" No encuentro la clave del \u00e1rbol de contenidos");
       return null;
     }
   }
@@ -105,7 +105,7 @@ function startContentScript() {
             console.log(instrumento);
 
             if ((instrumento == "FO") || (instrumento == "AR") || (instrumento == "IN")) {
-              alert('No se puede descargar. Seleccione un subnivel del árbol de navegación');
+              alert('No se puede descargar. Seleccione un subnivel del \u00e1rbol de navegaci\u00f3n');
             }
             else {
 
@@ -123,12 +123,12 @@ function startContentScript() {
             }
           }
           else {
-            alert('No se puede descargar. Seleccione un subnivel del árbol de navegación');
+            alert('No se puede descargar. Seleccione un subnivel del \u00e1rbol de navegaci\u00f3n');
           }
         });
       }
       else {
-        alert('Seleccione un subnivel del árbol de navegación');
+        alert('Seleccione un subnivel del \u00e1rbol de navegaci\u00f3n');
       }
 
 
@@ -141,6 +141,6 @@ function startContentScript() {
   }
 
   else {
-    alert('No existe galería de imágenes');
+    alert('No existe galer\u00eda de im\u00e1genes');
   }
 }
