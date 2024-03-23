@@ -1,6 +1,6 @@
-# AGN Extension: Descarga masiva de imágenes del Archivo General de la Nación
+# AGN Extension: Descarga masiva de imágenes del repositorio del Archivo General de la Nación
 
-Extensión para descargar masivamente imágenes del Archivo General de la Nación
+Extensión para descargar masivamente imágenes del repositorio del Archivo General de la Nación
 <hr>
 
 ![Alt text](img/legajo.jpg "Legajo decorativo")
@@ -10,7 +10,7 @@ Google Chrome 88 o superior
 
 ## Uso
 
-Una vez localizado el expediente, click en el icono de la extensión y pinchar en Descargar. La ruta del documento debe empezar por https://cloud.agn.gob.mx/nextcloud/ y las imágenes deben estar ordenadas por nombre (por defecto lo están)
+Una vez localizada la galería de imágenes que deseamos descargar, click en el icono de la extensión y pinchar en Descargar.
 
 ## Licencia
 
