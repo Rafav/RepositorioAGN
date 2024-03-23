@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function startContentScript() {
 
   function consultarValor(clave) {
+    
     let instrumentosAGN = {
       'Audiovisuales': 'au',
       'Cartogr\u00e1ficos': 'ca',
@@ -54,7 +55,8 @@ function startContentScript() {
       url = `https://repositorio.agn.gob.mx/api/img/unidadInstalacion/` +
         idInstrumento + `/${subParts[0]}`;
     } else {
-      alert('La longitud de subParts no es ni 1 ni 3');
+      alert('No es posible descargar. Ver log en la consola');
+      console.log('Problema con el identificador, la longitud de subParts no es ni 1 ni 3');
     }
     return url;
   }

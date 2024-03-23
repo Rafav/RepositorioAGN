@@ -18,7 +18,7 @@ async function descargarYProcesarJSON(url) {
             if ('idImagenDigitalizada' in item) {
                 console.log(url_base+item.idImagenDigitalizada); // Procesa cada idImagenDigitalizada
                 chrome.downloads.download({ url: url_base+item.idImagenDigitalizada});
-                await delay(5000)
+                await delay(5000);
 
             }
         }
@@ -28,15 +28,8 @@ async function descargarYProcesarJSON(url) {
 }
 
 
-function iterateFilename(url_json) {
-    console.log('Al lío');
-    chrome.downloads.download({ url: url_json });
-   
-}
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action === 'scrapedData') {
-        iterateFilename(request.url);
         descargarYProcesarJSON(request.url);
     }
 });
