@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
   const startButton = document.getElementById('startButton');
 
@@ -20,20 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
-
 function startContentScript() {
-
-
 
   function consultarValor(clave) {
     let instrumentosAGN = {
       'Audiovisuales': 'au',
-      'Cartográficos': 'ca',
-      'Iconográficos': 'ic',
+      'Cartogr\u00e1ficos': 'ca',
+      'Iconogr\u00e1ficos': 'ic',
       'Textuales': 'te',
       'Ficheros': 'fi'
     };
@@ -67,10 +57,7 @@ function startContentScript() {
       alert('La longitud de subParts no es ni 1 ni 3');
     }
     return url;
-
   }
-
-
 
   let existeBoton = !!document.querySelector('.menuBtnSeleccion'); // Verifica si existe algún botón con la clase 'menuBtnSeleccion'
 
@@ -130,16 +117,10 @@ function startContentScript() {
       else {
         alert('Seleccione un subnivel del \u00e1rbol de navegaci\u00f3n');
       }
-
-
     } else {
       alert('Es necesario seleccionar un tipo de instrumento');
     }
-
-
-
   }
-
   else {
     alert('No existe galer\u00eda de im\u00e1genes');
   }

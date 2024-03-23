@@ -3,11 +3,9 @@
 const url_base='https://repositorio.agn.gob.mx/api/img/image/';
 
 
-
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
-
 
 async function descargarYProcesarJSON(url) {
     try {
@@ -28,7 +26,6 @@ async function descargarYProcesarJSON(url) {
         console.error('Error al descargar o procesar el JSON:', error);
     }
 }
-
 
 
 function iterateFilename(url_json) {
